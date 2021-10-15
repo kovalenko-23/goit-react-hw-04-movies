@@ -1,0 +1,67 @@
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.button {
+  width: 100px;
+  margin-bottom: 10px;
+}
+.box {
+  display: flex;
+  flex-direction: column;
+}
+
+.thumb {
+  display: flex;
+}
+
+.about {
+  margin-left: 10px;
+}
+
+.about__name {
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.name {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.about__release_date {
+  display: flex;
+  padding-bottom: 5px;
+}
+.release_date {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.about__overview {
+  width: 300px;
+}
+
+.overview {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.additioanl_information {
+  display: flex;
+  flex-direction: column;
+}
+
+.additional {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+.links {
+  display: flex;
+  padding-bottom: 20px;
+  justify-content: space-between;
+  width: 120px;
+}

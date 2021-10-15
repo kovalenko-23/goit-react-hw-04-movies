@@ -1,6 +1,7 @@
-import { fetchMovieCredits } from '../Services/API';
+import { fetchMovieCredits } from '../../Services/API';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
+import image from '../../images/no-image.png';
 
 export default function CastView() {
   const { movieID } = useParams();
@@ -10,7 +11,6 @@ export default function CastView() {
   useEffect(() => {
     fetchMovieCredits(movieID).then(setCast);
   }, [movieID]);
-  console.log(cast);
 
   return (
     <>
@@ -20,6 +20,10 @@ export default function CastView() {
             <li key={actor.id}>
               <img
                 src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
+                onError={e => {
+                  e.target.onerror = null;
+                  e.target.src = image;
+                }}
                 width={200}
                 height={250}
                 alt={actor.name}

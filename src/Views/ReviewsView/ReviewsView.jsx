@@ -1,4 +1,4 @@
-import { fetchMovieReviews } from '../Services/API';
+import { fetchMovieReviews } from '../../Services/API';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 
@@ -10,11 +10,11 @@ export default function ReviewView() {
     fetchMovieReviews(movieID).then(setReview);
   }, [movieID]);
 
-  console.log(review);
+  const showReview = review && review.results.length !== 0;
 
   return (
     <div>
-      {review && (
+      {showReview ? (
         <ul>
           {review.results.map(result => (
             <li key={result.id}>
@@ -23,6 +23,8 @@ export default function ReviewView() {
             </li>
           ))}
         </ul>
+      ) : (
+        <p>There is no review</p>
       )}
     </div>
   );

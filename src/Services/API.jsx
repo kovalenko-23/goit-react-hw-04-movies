@@ -1,6 +1,3 @@
-// import axios from 'axios';
-
-// axios.defaults.baseURL = 'https://api.themoviedb.org';
 const BASE_URL = 'https://api.themoviedb.org';
 const KEY = '130ddbced0917ef5d6e094c730cee47c';
 const QUERY = '&language=en&include_adult=false';
