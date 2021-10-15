@@ -1,4 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { fetchMovieById } from '../../Services/API';
 import { Route } from 'react-router';
 import style from './MovieDetailsView.module.css';
@@ -26,7 +27,11 @@ export default function MovieDetailsView() {
   const [movie, setMovie] = useState(null);
 
   useEffect(() => {
-    fetchMovieById(movieID).then(setMovie);
+    fetchMovieById(movieID)
+      .then(setMovie)
+      .catch(error => {
+        toast.error(error.message);
+      });
   }, [movieID]);
 
   const onGoBack = () => {
@@ -39,6 +44,7 @@ export default function MovieDetailsView() {
 
   return (
     <>
+      <Toaster />
       {movie && (
         <div className={style.box}>
           <button className={style.button} type="button" onClick={onGoBack}>
@@ -73,38 +79,40 @@ export default function MovieDetailsView() {
           </div>
         </div>
       )}
-      <div className={style.additioanl_information}>
-        <p className={style.additional}>Additional information</p>
-        <div className={style.links}>
-          <Link
-            className={style.link}
-            to={{
-              pathname: `${url}/cast`,
-              state: {
-                from: {
-                  location,
+      {movie && (
+        <div className={style.additioanl_information}>
+          <p className={style.additional}>Additional information</p>
+          <div className={style.links}>
+            <Link
+              className={style.link}
+              to={{
+                pathname: `${url}/cast`,
+                state: {
+                  from: {
+                    location,
+                  },
                 },
-              },
-            }}
-          >
-            CAST
-          </Link>
+              }}
+            >
+              CAST
+            </Link>
 
-          <Link
-            className={style.link}
-            to={{
-              pathname: `${url}/review`,
-              state: {
-                from: {
-                  location,
+            <Link
+              className={style.link}
+              to={{
+                pathname: `${url}/review`,
+                state: {
+                  from: {
+                    location,
+                  },
                 },
-              },
-            }}
-          >
-            REVIEW
-          </Link>
+              }}
+            >
+              REVIEW
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
 
       <Suspense fallback={<p>Loading...</p>}>
         <Route path={`${path}/cast`}>
