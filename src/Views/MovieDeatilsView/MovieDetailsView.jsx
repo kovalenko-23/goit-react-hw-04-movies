@@ -1,16 +1,16 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { fetchMovieById } from '../../Services/API';
 import { Route } from 'react-router';
-import style from './MovieDetailsView.module.css';
-import image from '../../images/no-image.png';
 import {
   useParams,
   useRouteMatch,
   useHistory,
   useLocation,
 } from 'react-router';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import style from './MovieDetailsView.module.css';
+import { fetchMovieById } from '../../Services/API';
+import image from '../../images/no-image.png';
 
 const CastView = lazy(() =>
   import('../CastView/CastView' /*webpackChunkName: "cast-view"*/),
@@ -35,11 +35,7 @@ export default function MovieDetailsView() {
   }, [movieID]);
 
   const onGoBack = () => {
-    history.push(
-      location?.state?.from?.location?.state?.from?.location ??
-        location?.state?.from?.location ??
-        '/',
-    );
+    history.replace(location.state?.from ? location.state.from : '/');
   };
 
   return (
@@ -83,33 +79,24 @@ export default function MovieDetailsView() {
         <div className={style.additioanl_information}>
           <p className={style.additional}>Additional information</p>
           <div className={style.links}>
-            <Link
+            <NavLink
               className={style.link}
+              activeClassName={style.active__link}
               to={{
+                ...location,
                 pathname: `${url}/cast`,
-                state: {
-                  from: {
-                    location,
-                  },
-                },
               }}
             >
               CAST
-            </Link>
+            </NavLink>
 
-            <Link
+            <NavLink
               className={style.link}
-              to={{
-                pathname: `${url}/review`,
-                state: {
-                  from: {
-                    location,
-                  },
-                },
-              }}
+              activeClassName={style.active__link}
+              to={{ ...location, pathname: `${url}/review` }}
             >
               REVIEW
-            </Link>
+            </NavLink>
           </div>
         </div>
       )}

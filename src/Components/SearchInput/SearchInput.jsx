@@ -1,10 +1,13 @@
+import PropTypes from 'prop-types';
+
 export default function SearchInput({ onSubmit }) {
   return (
     <form
       onSubmit={e => {
         e.preventDefault();
         onSubmit(e.target.elements.searchInput.value);
-        e.target.elements.searchInput.value = '';
+        // e.target.elements.searchInput.value = '';
+        e.target.reset();
       }}
     >
       <input
@@ -17,3 +20,7 @@ export default function SearchInput({ onSubmit }) {
     </form>
   );
 }
+
+SearchInput.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

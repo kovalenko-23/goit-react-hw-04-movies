@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default function MoviesList({ movies, location }) {
   return (
@@ -6,17 +7,22 @@ export default function MoviesList({ movies, location }) {
       <ul>
         {movies.results.map(movie => (
           <li key={movie.id}>
-            <NavLink
+            <Link
               to={{
                 pathname: `movies/${movie.id}`,
                 state: { from: location },
               }}
             >
               {movie.title ?? movie.name}
-            </NavLink>
+            </Link>
           </li>
         ))}
       </ul>
     </>
   );
 }
+
+MoviesList.propTypes = {
+  movies: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+};

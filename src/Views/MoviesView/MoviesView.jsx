@@ -6,13 +6,12 @@ import SearchInput from '../../Components/SearchInput/SearchInput';
 import MoviesList from '../../Components/MoviesList/MoviesList';
 
 export default function MovieView() {
-  const [searchInput, setSearchInput] = useState('');
   const [movies, setMovies] = useState(null);
   const location = useLocation();
   const history = useHistory();
+  const locationQuerySearch = new URLSearchParams(location.search).get('query');
 
   const onInputSubmit = value => {
-    setSearchInput(value);
     history.push({
       ...location,
       search: `query=${value}`,
@@ -20,30 +19,25 @@ export default function MovieView() {
   };
 
   useEffect(() => {
-    if (!searchInput) {
+    if (!locationQuerySearch) {
       return;
     }
-    fetchMoviesByQuery(searchInput).then(movies => {
+
+    fetchMoviesByQuery(locationQuerySearch).then(movies => {
       if (movies.results.length === 0) {
         toast.error('Nothing found');
         return;
       }
       setMovies(movies);
     });
-  }, [searchInput]);
+  }, [locationQuerySearch]);
 
   return (
     <>
       <Toaster />
       <SearchInput onSubmit={onInputSubmit} />
 
-      {movies && (
-        <MoviesList
-          movies={movies}
-          location={location}
-          // query={locationQuerySearch}
-        />
-      )}
+      {movies && <MoviesList movies={movies} location={location} />}
     </>
   );
 }

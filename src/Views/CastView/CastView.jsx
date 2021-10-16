@@ -12,9 +12,11 @@ export default function CastView() {
     fetchMovieCredits(movieID).then(setCast);
   }, [movieID]);
 
+  const showCast = cast && cast.cast.length !== 0;
+
   return (
     <>
-      {cast && (
+      {showCast ? (
         <ul>
           {cast.cast.map(actor => (
             <li key={actor.id}>
@@ -33,6 +35,8 @@ export default function CastView() {
             </li>
           ))}
         </ul>
+      ) : (
+        <p>There is no info</p>
       )}
     </>
   );

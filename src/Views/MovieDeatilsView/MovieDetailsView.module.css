@@ -65,3 +65,7 @@ p {
   justify-content: space-between;
   width: 120px;
 }
+
+.active__link {
+  color: blue;
+}
